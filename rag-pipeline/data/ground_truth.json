@@ -1,0 +1,58 @@
+[
+  {
+    "question": "What is the main contribution of this paper?",
+    "answer": "The paper’s primary contribution is the introduction of the **Transformer** – a new, simple network architecture that relies exclusively on attention mechanisms and eliminates both recurrence and convolutional layers 【Source 1†L1-L5】",
+    "page": 1,
+    "span_start": 0,
+    "span_end": 200
+  },
+  {
+    "question": "What dataset was used to evaluate the proposed method?",
+    "answer": "The authors evaluated the Transformer on the **WMT 2014 machine‑translation datasets** – specifically the English‑German and English‑French translation tasks (the standard WMT 2014 English‑German and English‑French corpora)【Source 1†L6-L9】【Source 3†L5-L8】",
+    "page": 9,
+    "span_start": 50,
+    "span_end": 300
+  },
+  {
+    "question": "What baseline methods were compared in the experiments?",
+    "answer": "The experiments compared the Transformer against a range of previously published systems, including:\n\n* **ByteNet** [18]  \n* **Deep‑Att + PosUnk** [39]  \n* **GNMT + RL** [38]  \n* **ConvS2S** [9]  \n* **MoE** [32]  \n\nand their ensemble versions:\n\n* **Deep‑Att + PosUnk Ensemble** [39]  \n* **GNMT + RL Ensemble** [38]  \n* **ConvS2S Ensemble** [9]  \n\nThese baselines are listed in Table 2 of the paper 【Source 3 | Page 8】",
+    "page": 8,
+    "span_start": 100,
+    "span_end": 400
+  },
+  {
+    "question": "What is the proposed architecture or model design?",
+    "answer": "The paper proposes the **Transformer** architecture – a fully‑attention‑based encoder‑decoder model that eliminates recurrence and convolution.  \n\n* The model consists of an encoder and a decoder, each built from **six identical layers**.  \n* Each encoder layer has a **multi‑head self‑attention** sub‑layer followed by a **position‑wise fully‑connected feed‑forward** sub‑layer, with residual connections and layer‑normalization around each sub‑layer (output dimension dₘₒ𝒹ₑₗ = 512)【Source 1】.  \n* Each decoder layer adds a third sub‑layer that performs multi‑head attention over the encoder’s output, and its self‑attention is masked to prevent attending to future positions【Source 1】.  \n* Overall, the design relies **entirely on attention mechanisms** (self‑attention and multi‑head attention) to capture global dependencies, dispensing with any recurrent or convolutional components",
+    "page": 3
+  },
+  {
+    "question": "What are the key findings or results of the paper?",
+    "answer": "The paper demonstrates that a **pure‑attention architecture (the Transformer)** can replace recurrent and convolutional networks and achieve **state‑of‑the‑art performance while being far more efficient to train**.\n\n* **Translation quality:**  \n  * The Transformer reaches **28.4 BLEU on WMT 2014 English‑to‑German** and **41.8 BLEU on English‑to‑French**, surpassing previous best results (including ensembles) by more than 2 BLEU points【Source 3†L13-L20】.  \n  * In the ablation study (Table 3) the base model attains **25.8 BLEU** on the development set; larger models and modest hyper‑parameter changes raise BLEU to **26.4** ",
+    "page": 14
+  },
+  {
+    "question": "What are the limitations of the proposed approach?",
+    "answer": "The main limitation noted is the **computational cost of self‑attention on very long sequences**.  The authors point out that, although self‑attention works well for typical sentence lengths, it becomes expensive when the input length \\(n\\) grows large.  They suggest that one could restrict attention to a local window of size \\(r\\) to improve performance, but this would increase the longest dependency path to \\(O(n/r)\\) and may hurt modeling capacity.  Consequently, they treat this as an open issue to be explored in future work",
+    "page": 7
+  },
+  {
+    "question": "How does the method handle the core technical challenge described?",
+    "answer": "The approach tackles the difficulty of learning long‑range dependencies and the high computational cost of traditional recurrent or convolutional encoders by **replacing them with self‑attention layers**.  \n\n* A self‑attention layer links every token to every other token in a single operation, so the **maximum path length between any two positions is O(1)** and only **one sequential step is required**. This shortens the forward‑ and backward‑signal paths and makes it easier for the network to capture distant relationships, which is a key challenge in sequence‑to‑sequence tasks.  \n\n* Because the model has no recurrence or convolution, it **injects positional information** through sinusoidal (or learned) positional encodings added to the input embeddings . These encodings give the model a notion of token order while preserving the benefits of self‑attention.  \n\n* For very long sequences the authors also propose",
+    "page": 12
+  },
+  {
+    "question": "What training procedure or optimization strategy was used?",
+    "answer": "The models were trained on the WMT 2014 translation data using the Adam optimizer (β₁ = 0.9, β₂ = 0.98, ε = 10⁻⁹).  The learning‑rate followed the schedule  \n\n\\[\n\\text{lrate}=d^{-0.5}\\,\\min(\\text{step}^{-0.5},\\;\\text{step}\\times\\text{warmup\\_steps}^{-1.5}),\n\\]\n\nwhich linearly warms up for the first 4 000 steps and then decays with the inverse‑square‑root of the step number.  Base models were trained for 100 000 steps (≈12 h) and larger models for 300 000 steps (≈3.5 days) on a machine with 8 NVIDIA P100 GPUs.",
+    "page": 8
+  },
+  {
+    "question": "What contributions does the paper claim to make?",
+    "answer": "The provided excerpts describe aspects of the model (self‑attention, training details, regularization) and note that the authors inspect attention heads for interpretability, but they do not contain a clear statement of the paper’s claimed contributions. Therefore, the context does not provide enough information to answer the question.",
+    "page": 12
+  },
+  {
+    "question": "What related work is discussed in the paper?",
+    "answer": "he paper cites several prior approaches as related work, including:\n\n* **Sub‑word tokenization methods** – word‑piece representations [38] and byte‑pair encodings [31] used for sentence representations.  \n* **Self‑attention alternatives** – noting that restricting self‑attention to a local neighbourhood can reduce path length, and that self‑attention can yield more interpretable models.  \n* **Convolutional architectures** – single convolutional layers with kernel width k, stacked convolutions [O(n/k)] or dilated convolutions [18] to connect all positions, and separable convolutions that reduce complexity.  \n* **Optimization** – the Adam optimizer [20] used for training.\n\nThese citations constitute the related work discussed in the paper",
+    "page": 13
+  }
+]
